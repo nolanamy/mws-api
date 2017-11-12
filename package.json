@@ -29,6 +29,7 @@
   "dependencies": {
     "bluebird": "^3.5.0",
     "lodash": "^4.17.4",
+    "qs": "^6.5.1",
     "request": "^2.81.0",
     "xml2js": "^0.4.17"
   },
