@@ -10,12 +10,12 @@ Supports throttling and pagification. (NextToken stuff)
 Examples
 --------
 
-Installation:
+### Installation:
 ```
 npm i mws-api -S
 ```
 
-Initialization:
+### Initialization:
 
 ```javascript
 const MWSClient = require('mws-api');
@@ -40,7 +40,7 @@ const mws = new MWSClient({
 }
 ```
 
-Usage:
+### Usage:
 
 ```javascript
 
@@ -55,7 +55,7 @@ mws.Orders.ListOrders({
 });
 ```
 
-Flat files:
+### Flat files:
 
 When working with a flat-file response from Amazon, a `parseCSVResult` function is provided as an
 option to conviniently post-process the result. Returning a Promise will result in the Promise being resolved.
@@ -71,5 +71,31 @@ const mws = new MWSClient({
   meta: {
     parseCSVResult: (data) => iconv.encode(data, 'utf-8').toString()
   }
+});
+```
+
+### Fulfillment:
+
+```javascript
+mws.FulfillmentOutboundShipment.CreateFulfillmentOrder({
+  SellerFulfillmentOrderId: 'order-id', // must be unique for each order
+  DisplayableOrderId: 'order-id',
+  DisplayableOrderComment: 'order-comment',
+  DisplayableOrderDateTime: (new Date()).toISOString(),
+  FulfillmentAction: 'Hold', // or 'Ship'
+  ShippingSpeedCategory: 'Standard', // or 'Expedited' or 'Priority'
+  'DestinationAddress.Name': 'Chip Douglas',
+  'DestinationAddress.Line1': '7662 Beach Blvd',
+  'DestinationAddress.Line2': '',
+  'DestinationAddress.Line3': '',
+  'DestinationAddress.City': 'Buena Park',
+  'DestinationAddress.StateOrProvinceCode': 'CA',
+  'DestinationAddress.PostalCode': '90620',
+  'DestinationAddress.CountryCode': 'US',
+  LineItems: [{
+    Quantity: 1,
+    SellerFulfillmentOrderItemId: 'order-id' + '_0',
+    SellerSKU: '101'
+  }]
 });
 ```
